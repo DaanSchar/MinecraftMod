@@ -1,6 +1,7 @@
 package com.example.examplemod.common.init;
 
 import com.example.examplemod.ThisMod;
+import com.example.examplemod.common.block.ModBlock;
 import com.example.examplemod.common.item.ModItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -20,6 +21,7 @@ public class Registry {
         BLOCKS.register(modEventBus);
 
         ModItem.register();
+        ModBlock.register();
     }
 
 }
