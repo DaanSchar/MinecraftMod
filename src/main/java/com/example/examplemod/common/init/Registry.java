@@ -1,6 +1,7 @@
 package com.example.examplemod.common.init;
 
 import com.example.examplemod.ThisMod;
+import com.example.examplemod.common.item.ModItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,6 +18,8 @@ public class Registry {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ITEMS.register(modEventBus);
         BLOCKS.register(modEventBus);
+
+        ModItem.register();
     }
 
 }
