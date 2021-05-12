@@ -38,27 +38,25 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
     private List<BlockState> blockBag = new LinkedList<>();
     private List<BlockPos> posBag = new LinkedList<>();
 
+    // --------------- Quarry ----------------
+
     @Override
     public void tick() {
         tick++;
 
-        int power = world.getStrongPower(pos);
-            if (power > 0) {
-                setReverse(true);
-            } else {
-                setReverse(false);
-            }
+            if (isRedstonePowered())
+                reverse = true;
+            else
+                reverse = false;
 
         if (tick > 10) {
             tick = 0;
 
-            if (!reverse) {
+            if (!reverse)
                 removeBlockFromLayer();
-            }
 
-            if (reverse && posBag.size() > 0) {
+            if (reverse && posBag.size() > 0)
                 placeBackBlock();
-            }
 
             if (posBag.isEmpty() && reverse) {
                 currentPos = pos.down();
@@ -96,6 +94,23 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
         this.world.setBlockState(pos, block, 0);
     }
 
+    private BlockPos[] getPosLayer(BlockPos pos) {
+        BlockPos[] posLayer = new BlockPos[9];
+
+        posLayer[0] = pos.north().west();
+        posLayer[1] = pos.north();
+        posLayer[2] = pos.north().east();
+
+        posLayer[3] = pos.west();
+        posLayer[4] = pos;
+        posLayer[5] = pos.east();
+
+        posLayer[6] = pos.south().west();
+        posLayer[7] = pos.south();
+        posLayer[8] = pos.south().east();
+        return posLayer;
+    }
+
     private void removeFromTileInventory(Item item) {
         ItemStack itemStack = new ItemStack(item);
         for (int i = 0; i < slots; i++) {
@@ -122,21 +137,18 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
         }
     }
 
-    private BlockPos[] getPosLayer(BlockPos pos) {
-        BlockPos[] posLayer = new BlockPos[9];
+    @Override
+    public boolean isItemValidForSlot(int index, ItemStack otherItem) {
+        ItemStack item = getStackInSlot(index);
 
-        posLayer[0] = pos.north().west();
-        posLayer[1] = pos.north();
-        posLayer[2] = pos.north().east();
+        if (item.isEmpty())
+            return true;
+        if (item.isItemEqual(otherItem))
+            return true;
+        if (item.isItemEqual(new ItemStack(Items.AIR)))
+            return true;
 
-        posLayer[3] = pos.west();
-        posLayer[4] = pos;
-        posLayer[5] = pos.east();
-
-        posLayer[6] = pos.south().west();
-        posLayer[7] = pos.south();
-        posLayer[8] = pos.south().east();
-        return posLayer;
+        return false;
     }
 
     @Override
@@ -145,30 +157,17 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
         currentPos = pos.down();
     }
 
-    public void setReverse(boolean bool) {
-        this.reverse = bool;
+    // --------------- Redstone ----------------
+
+    private int getRedstonePower() {
+        return world.getStrongPower(pos);
     }
 
-    public boolean getReverse() {
-        return reverse;
+    private boolean isRedstonePowered() {
+        return getRedstonePower() > 0;
     }
 
-    @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
-        ItemStack item = getStackInSlot(index);
-
-        if (item.isEmpty())
-            return true;
-        if (item.isItemEqual(stack))
-            return true;
-        if (item.isItemEqual(new ItemStack(Items.AIR)))
-            return true;
-
-        return false;
-    }
-
-
-    // --------------- Container part ----------------
+    // --------------- Container ----------------
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(slots, ItemStack.EMPTY);
 
