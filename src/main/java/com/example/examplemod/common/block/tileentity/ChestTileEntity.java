@@ -31,7 +31,6 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
     @Override
     public void tick() {
         tick++;
-        tick++;
 
         if (tick > 10) {
             tick = 0;
@@ -53,9 +52,6 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
                 i = 0;
                 k = 0;
             }
-
-            System.out.println(k);
-
         }
     }
 

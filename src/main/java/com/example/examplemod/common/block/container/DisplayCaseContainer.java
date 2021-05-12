@@ -7,9 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,16 +18,19 @@ import java.util.Objects;
 
 public class DisplayCaseContainer extends Container {
 
-    public final DisplayCaseTileEntity te;
+    public final DisplayCaseTileEntity tileEntity;
     private final IWorldPosCallable canInteractWithCallable;
 
-    public DisplayCaseContainer(final int windowId, final PlayerInventory playerInventory, final DisplayCaseTileEntity te) {
+    public DisplayCaseContainer(final int windowId, final PlayerInventory playerInventory, final DisplayCaseTileEntity tileEntity) {
         super(ContainerTypesInit.DISPLAY_CASE_CONTAINER_TYPE.get(), windowId);
-        this.te = te;
-        this.canInteractWithCallable = IWorldPosCallable.of(te.getWorld(), te.getPos());
+        this.tileEntity = tileEntity;
+        this.canInteractWithCallable = IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos());
 
         // Tile Entity
-        this.addSlot(new Slot((IInventory) te, 0, 80, 35));
+        //this.addSlot(new Slot( tileEntity, 0, 80, 35));
+        for (int col = 0; col < 5; col++) {
+            this.addSlot(new Slot(tileEntity, col, 8 + col * 18, 35));
+        }
 
         // Main Player Inventory
         for (int row = 0; row < 3; row++) {
