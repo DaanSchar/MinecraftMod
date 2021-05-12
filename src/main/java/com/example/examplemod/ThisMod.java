@@ -1,6 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.common.init.Registry;
+import com.example.examplemod.common.init.TileEntityTypesInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,9 +32,7 @@ public class ThisMod
     public ThisMod() {
 
         Registry.register();
-
-
-
+        TileEntityTypesInit.TILE_ENTITY_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 
 

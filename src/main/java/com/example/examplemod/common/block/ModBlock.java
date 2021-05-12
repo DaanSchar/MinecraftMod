@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 public class ModBlock {
 
     public static final RegistryObject<Block> SILVER_ORE = register("silver_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).sound(SoundType.ANCIENT_DEBRIS)));
+    public static final RegistryObject<Block> CHEST = register("chest", () -> new ChestBlock());
 
     /**
      * registers a block when no item of that block is required.
