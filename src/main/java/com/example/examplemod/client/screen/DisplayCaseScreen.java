@@ -33,7 +33,7 @@ public class DisplayCaseScreen extends ContainerScreen<DisplayCaseContainer> {
     protected void init() {
         super.init();
         this.addButton(new ImageButton(this.guiLeft + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (button) -> {
-            this.getContainer().tileEntity.setReverse(!this.getContainer().tileEntity.getReverse());
+            System.out.println("this button does nothing :)");
         }));
     }
 

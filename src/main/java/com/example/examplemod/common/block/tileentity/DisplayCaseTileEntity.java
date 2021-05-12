@@ -19,8 +19,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,26 +42,27 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
     public void tick() {
         tick++;
 
-        if(world.isRemote){
-            if (tick > 10) {
-                tick = 0;
-                LOGGER.info("reverse = " + reverse);
+        int power = world.getStrongPower(pos);
+            if (power > 0) {
+                setReverse(true);
+            } else {
+                setReverse(false);
+            }
 
-                if (!reverse) {
-                    LOGGER.info("removing blocks");
-                    removeBlockFromLayer();
-                }
+        if (tick > 10) {
+            tick = 0;
 
-                if (reverse && posBag.size() > 0) {
-                    placeBackBlock();
-                    LOGGER.info("placing back blocks \n");
-                }
+            if (!reverse) {
+                removeBlockFromLayer();
+            }
 
-                if (posBag.isEmpty() && reverse) {
-                    LOGGER.info("posbag is empty and reverse = " + reverse);
-                    currentPos = pos.down();
-                    i = 0;
-                }
+            if (reverse && posBag.size() > 0) {
+                placeBackBlock();
+            }
+
+            if (posBag.isEmpty() && reverse) {
+                currentPos = pos.down();
+                i = 0;
             }
         }
     }
@@ -147,9 +146,7 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
     }
 
     public void setReverse(boolean bool) {
-        NonNullList<ItemStack> list = NonNullList.withSize(slots, new ItemStack(Items.PUMPKIN));
         this.reverse = bool;
-        setItems(list);
     }
 
     public boolean getReverse() {
@@ -226,4 +223,5 @@ public class DisplayCaseTileEntity extends LockableLootTileEntity implements ITi
             ItemStackHelper.loadAllItems(nbt, this.items);
         }
     }
+
 }
