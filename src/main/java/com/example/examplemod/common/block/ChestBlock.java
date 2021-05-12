@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 public class ChestBlock extends Block {
 
     public ChestBlock() {
-        super(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).harvestLevel(1).harvestTool(ToolType.AXE).sound(SoundType.WOOD));
+        super(AbstractBlock.Properties.create(Material.WOOD).harvestLevel(1).harvestTool(ToolType.AXE).sound(SoundType.WOOD));
     }
 
     @Override

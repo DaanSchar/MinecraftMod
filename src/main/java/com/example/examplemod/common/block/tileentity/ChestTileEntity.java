@@ -49,7 +49,7 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
 
             if (posBag.isEmpty() && reverse) {
                 reverse = false;
-                currentPos = getBlockPos().below();
+                currentPos = pos.down();
                 i = 0;
                 k = 0;
             }
@@ -66,13 +66,13 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
     private void removeBlockFromLayer() {
         if (i == getPosLayer(currentPos).length) {
             i = 0;
-            currentPos = currentPos.below();
+            currentPos = currentPos.down();
         }
 
         BlockPos pos = getPosLayer(currentPos)[i];
 
         posBag.add(pos);
-        blockBag.add(this.getLevel().getBlockState(pos).getBlock().defaultBlockState());
+        blockBag.add(this.world.getBlockState(pos).getBlock().getDefaultState());
 
         removeBlock(pos);
         i++;
@@ -80,11 +80,11 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
     }
 
     private void removeBlock(BlockPos pos) {
-            this.getLevel().setBlock(pos, Blocks.AIR.defaultBlockState(), 0);
+            this.world.setBlockState(pos, Blocks.AIR.getDefaultState(), 0);
     }
 
     private void placeBlock(BlockPos pos, BlockState block) {
-        this.getLevel().setBlock(pos, block, 0);
+        this.world.setBlockState(pos, block, 0);
     }
 
     private BlockPos[] getPosLayer(BlockPos pos) {
@@ -108,6 +108,6 @@ public class ChestTileEntity extends TileEntity implements ITickableTileEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        currentPos = getBlockPos().below();
+        currentPos = pos.down();
     }
 }

@@ -14,8 +14,9 @@ import java.util.function.Supplier;
 
 public class ModBlock {
 
-    public static final RegistryObject<Block> SILVER_ORE = register("silver_ore", () -> new Block(AbstractBlock.Properties.of(Material.STONE).harvestLevel(2).sound(SoundType.ANCIENT_DEBRIS)));
+    public static final RegistryObject<Block> SILVER_ORE = register("silver_ore", () -> new Block(AbstractBlock.Properties.create(Material.ROCK).harvestLevel(2).sound(SoundType.ANCIENT_DEBRIS)));
     public static final RegistryObject<Block> CHEST = register("chest", () -> new ChestBlock());
+    public static final RegistryObject<Block> DISPLAY_CASE = register("display_case", () -> new DisplayCaseBlock());
 
     /**
      * registers a block when no item of that block is required.
@@ -29,7 +30,7 @@ public class ModBlock {
      */
     private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> block) {
         RegistryObject<T> ret = registerNoItem(name, block);
-        Registry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
+        Registry.ITEMS.register(name, () -> new BlockItem(ret.get(), new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)));
         return ret;
     }
 

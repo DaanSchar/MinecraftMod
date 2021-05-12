@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.common.init.ContainerTypesInit;
 import com.example.examplemod.common.init.Registry;
 import com.example.examplemod.common.init.TileEntityTypesInit;
 import net.minecraft.block.Block;
@@ -33,6 +34,7 @@ public class ThisMod
 
         Registry.register();
         TileEntityTypesInit.TILE_ENTITY_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ContainerTypesInit.CONTAINER_TYPE.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 
 
@@ -59,7 +61,7 @@ public class ThisMod
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
