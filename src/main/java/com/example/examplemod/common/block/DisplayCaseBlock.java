@@ -2,11 +2,13 @@ package com.example.examplemod.common.block;
 
 import com.example.examplemod.common.block.tileentity.DisplayCaseTileEntity;
 import com.example.examplemod.common.init.TileEntityTypesInit;
+import com.example.examplemod.common.particle.ModParticle;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
@@ -19,6 +21,7 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class DisplayCaseBlock extends Block {
 
@@ -53,4 +56,10 @@ public class DisplayCaseBlock extends Block {
         return false;
     }
 
+    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+        double d0 = (double)pos.getX() + 0.5D;
+        double d1 = (double)pos.getY() + 1.5D;
+        double d2 = (double)pos.getZ() + 0.5D;
+        worldIn.addParticle(ModParticle.ORANGE_PARTICLE.get(), d0, d1, d2, 0.0D, 0.0D, 0.0D);
+    }
 }
